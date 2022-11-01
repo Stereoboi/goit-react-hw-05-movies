@@ -1,6 +1,17 @@
 import { useParams, } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFilmsByCredits } from "api/api";
+import {
+  Title,
+  Text,
+  List,
+  ListItem,
+  Wrapper,
+  Poster,
+  TextWrapper
+
+} from "./Cast.styled";
+
 
 const Cast = () => { 
 const { movieId } = useParams();
@@ -10,11 +21,11 @@ const [castData, setCastData] = useState(null);
    const getFetchCast = async () => {
       try {
         const result = await fetchFilmsByCredits(movieId);
-        console.log(result);
+        
         setCastData(result)
         
       } catch (err) {
-        console.log('error');
+        
       }
     }
     getFetchCast();
@@ -23,24 +34,26 @@ const [castData, setCastData] = useState(null);
 
   if (castData) {
     return (
-    <>
-      <h3>Cast</h3>
-      <ul>
+    <Wrapper>
+      <Title>Cast</Title>
+      <List>
           {castData.map(el => (
-          <li key={el.id}>
-            <div>
-              <img
-                src={`https://image.tmdb.org/t/p/w500${el.profile_path}`}
+          <ListItem key={el.id}>
+              <Poster
+                src={`https://image.tmdb.org/t/p/w500/${el.profile_path}`}
                 alt={el.name}
                 width="150"
                 />
-                <p>{el.name}</p>
-                <p>{el.character}</p>
-            </div>
-          </li>
+              <TextWrapper>
+                <Title>Name</Title>
+                <Text>{el.name}</Text>
+                <Title>Character</Title>
+                <Text>{el.character}</Text>
+            </TextWrapper>
+          </ListItem>
         ))}
-      </ul>
-    </>
+      </List>
+    </Wrapper>
   )
   }
 }

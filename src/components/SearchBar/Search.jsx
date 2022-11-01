@@ -1,17 +1,32 @@
 import PropTypes from 'prop-types';
+import {TfiSearch} from "react-icons/tfi";
+import {
+  Form,
+  Input,
+  SubmitBtn,
+  ButtonLabel
+
+} from './Search.styled';
 
 export const Search = ({onSubmit}) => {
   return (
-    <form onSubmit={e => onSubmit(e)} >
-        <input 
+    <Form onSubmit={e => onSubmit(e)} >
+        <Input 
           type="text"
-          name="query"  
+          name="query"
+          placeholder='Type name of movie'  
         />
-        <button>search</button>
-      </form>
+      <SubmitBtn>
+        <TfiSearch/>
+          <ButtonLabel>
+            Search
+          </ButtonLabel>
+        </SubmitBtn>
+      </Form>
   )
 }
 
 Search.propTypes = {
     onSubmit: PropTypes.func,
 }
+

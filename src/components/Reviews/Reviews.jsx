@@ -1,6 +1,14 @@
 import { useParams, } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFilmsReviews } from "api/api";
+import {
+  Title,
+  Text,
+  List,
+  ListItem,
+  Wrapper,
+  ErrorTitle
+} from "./Reviews.styled";
 
 const Reviews = () => { 
 const { movieId } = useParams();
@@ -10,32 +18,32 @@ const [reviewsData, setReviewsData] = useState([]);
    const getFetchCast = async () => {
       try {
         const result = await fetchFilmsReviews(movieId);
-        console.log(result);
         setReviewsData(result)
-        
       } catch (err) {
-        console.log('error');
+        
       }
     }
     getFetchCast();
  },[movieId])
 
 
-  if (reviewsData) {
+  if (reviewsData.length > 0) {
     return (
-    <>
-      <h3>Reviews</h3>
-      <ul>
+    <Wrapper>
+      <List>
           {reviewsData.map(el => (
-          <li key={el.id}>
-            <h2>{el.author}</h2>
-            <p>{el.content}</p>
-          </li>
+          <ListItem key={el.id}>
+            <Title>{el.author}</Title>
+            <Text>{el.content}</Text>
+          </ListItem>
         ))}
-      </ul>
-    </>
+      </List>
+    </Wrapper>
   )
   }
+  
+  return <ErrorTitle>There is no reviews.</ErrorTitle> 
+  
 }
 
 export default Reviews

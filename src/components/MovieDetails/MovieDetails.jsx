@@ -1,7 +1,22 @@
-import { useParams, Outlet, Link, useLocation,  } from "react-router-dom";
+import { useParams, Outlet, useLocation,  } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFilmsById } from "api/api";
 import { Suspense } from "react";
+import {
+  LinkItem,
+  Wrapper,
+  WrapperInfo,
+  TextWrapper,
+  PageTitle,
+  Poster,
+  Title,
+  MovieTitle,
+  Text,
+  ListItem,
+  List,
+  BackLinkItem
+
+} from "./MovieDetails.styled";
 
 const MovieDetails = () => {
 const { movieId } = useParams();
@@ -10,7 +25,6 @@ const [genres, setGenres] = useState([])
 const location = useLocation();
 
 const backLinkHref = location.state?.from ?? '/';
-console.log(backLinkHref);
  
   useEffect(() => {
     const getFetch = async () => {
@@ -33,37 +47,45 @@ console.log(backLinkHref);
   if (movieData) {
     const { poster_path, title, release_date, popularity, overview,  } = movieData;
     
-    const genresMap = genres.map(el=>el.name + " ")
+    const genresMap = genres.map(el=>el.name + ", ")
     
     return (
     
-      <div>
-      <Link to={backLinkHref} type='button'>Back</Link>
-      <h2>MovieDetailsPage</h2>
-          <img
-            src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+      <Wrapper>
+      <BackLinkItem to={backLinkHref} type='button'>Back</BackLinkItem>
+        <PageTitle>MovieDetailsPage</PageTitle>
+        <WrapperInfo>
+          <Poster
+            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
             alt={title}
-            width="250"
+            width="350"
           />
-          <h2>
-            {movieData.title}({release_date.slice(0, 4)})
-          </h2>
-          <h3>Overview:</h3>
-          <p>{overview}</p>
-          <p>User Score : {Math.round(Number(popularity))}%</p>
-          <h3>Genres</h3>
-          <p>{genresMap}</p>
-          <li>
-            <Link to='cast' state={{from: backLinkHref}}>Cast</Link>
-          </li>
-          <li>
-            <Link to='reviews' state={{from: backLinkHref}}>Reviews</Link>
-          </li>
+          <TextWrapper>
+            <MovieTitle>
+              {movieData.title}({release_date.slice(0, 4)})
+            </MovieTitle>
+              <Title>Overview:</Title>
+                <Text>{overview}</Text>
+            <Title>
+              <Text>User Score : {Math.round(Number(popularity))}%</Text>
+            </Title>
+            <Title>Genres</Title>
+            <Text>{genresMap}</Text>
+          </TextWrapper>
+        </WrapperInfo>
+          <List>
+            <ListItem>
+              <LinkItem to='cast' state={{from: backLinkHref}} end>Cast</LinkItem>
+            </ListItem>
+            <ListItem>
+              <LinkItem to='reviews' state={{from: backLinkHref}}>Reviews</LinkItem>
+            </ListItem>
+          </List>
           
         <Suspense>
           <Outlet />
         </Suspense>
-      </div>
+      </Wrapper>
       
   )
   }
