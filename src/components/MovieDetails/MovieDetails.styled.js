@@ -8,6 +8,7 @@ export const LinkItem = styled(NavLink)`
     text-decoration: none;
     color: black;
     font-weight: 500;
+    margin-right: 15px;
 
   &:hover {
     color: white;

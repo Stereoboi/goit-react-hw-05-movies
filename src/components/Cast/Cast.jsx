@@ -11,19 +11,18 @@ import {
   TextWrapper
 
 } from "./Cast.styled";
-
+import Default from "../../Images/Default.png"
 
 const Cast = () => { 
 const { movieId } = useParams();
-const [castData, setCastData] = useState(null); 
+const [castData, setCastData] = useState(null);
+const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
    const getFetchCast = async () => {
       try {
         const result = await fetchFilmsByCredits(movieId);
-        
         setCastData(result)
-        
       } catch (err) {
         
       }
@@ -31,7 +30,7 @@ const [castData, setCastData] = useState(null);
     getFetchCast();
  },[movieId])
 
-
+  
   if (castData) {
     return (
     <Wrapper>
@@ -40,9 +39,12 @@ const [castData, setCastData] = useState(null);
           {castData.map(el => (
           <ListItem key={el.id}>
               <Poster
-                src={`https://image.tmdb.org/t/p/w500/${el.profile_path}`}
+                src={el.profile_path && loaded ?
+                  `https://image.tmdb.org/t/p/w500/${el.profile_path}`
+                  : Default}
                 alt={el.name}
                 width="150"
+                onLoad={() => setLoaded(true)}
                 />
               <TextWrapper>
                 <Title>Name</Title>

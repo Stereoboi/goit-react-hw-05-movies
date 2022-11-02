@@ -10,38 +10,68 @@ import {
   List,
   Wrapper
 } from './Movies.styled';
+import { Notification,Toast } from 'components/Notification/Notification';
+
 
 const Movies = () => {
-
-  
+  const [status, setStatus] = useState('idle')
   const [searchResults, setSearchResults] = useState([]);
-  
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const search = searchParams.get("name") ?? '';
 
   const handleSubmit = e => {
+
     e.preventDefault();
-    
     setSearchParams({ name: e.target.elements.query.value })
     
   };
 
   useEffect(() => {
-   if (!search) return
    
+   if (!search) return
    const getFetch = async () => {
       try {
         const result = await fetchFilmsByQuery(search);
         setSearchResults(result)
+        if (searchResults.length === 0) {
+          throw new Error();
+        }
+        setStatus("resolved")
+        
       } catch (err) {
-        // console.log('error');
+        setStatus("rejected")
+        Notification();
       }
     }
     getFetch();
-  }, [search, searchParams])
+  }, [search, searchParams, searchResults.length])
 
-  return (
+  if (status === "idle") {
+    return (
+      <Wrapper>
+      <Title>Movies</Title>
+      <Search
+        onSubmit={handleSubmit}
+        value={search}
+        />
+    </Wrapper>
+    )
+  }
+  if (status === "pending") {
+    return (
+      <Wrapper>
+      <Title>Movies</Title>
+      <Search
+        onSubmit={handleSubmit}
+        value={search}
+        />
+      </Wrapper>
+    )
+  }
+
+  if (status === "resolved") {
+    return (
     <Wrapper>
       <Title>Movies</Title>
       <Search
@@ -61,6 +91,20 @@ const Movies = () => {
       )}
     </Wrapper>
   );
+  }
+  if (status === "rejected") {
+    return (
+      <Wrapper>
+      <Title>Movies</Title>
+      <Search
+        onSubmit={handleSubmit}
+        value={search}
+        />
+      <Toast/>
+    </Wrapper>
+    )
+  }
+
 };
 
 export default Movies

@@ -12,6 +12,7 @@ export const PageTitle = styled.h2`
   margin-top:15px;
 `
 export const Poster = styled.img`
+    height:300px;
     width: 100%;
     object-fit: cover;
     border-bottom: 1px solid rgb(204, 204, 204);
