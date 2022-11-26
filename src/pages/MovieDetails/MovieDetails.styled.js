@@ -2,41 +2,30 @@ import styled from "styled-components";
 
 import { NavLink } from "react-router-dom";
 
-export const LinkItem = styled(NavLink)`
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    color: black;
-    font-weight: 500;
-    margin-right: 15px;
-
-  &:hover {
-    color: white;
-    background-color: orangered;
-  }
-  &.active {
-    color: white;
-    background-color: orangered;
-  }
-`;
 
 export const BackLinkItem = styled(NavLink)`
+   display:flex;
+    width:120px;
     padding: 8px 16px;
+    align-items: center;
+    font-size: 20px;
     border-radius: 4px;
     text-decoration: none;
     color: black;
     font-weight: 500;
-
+    color: var(--color-dark-grey);
+    transition: color 250ms ease-in-out;
+    
   &:hover {
     color: white;
-    background-color: orangered;
+    background-color: var(--color-green);
   }
   
 `;
 
 
 export const Wrapper = styled.div`
-  
+  margin-top:30px;
 `
 export const WrapperInfo = styled.div`
   display:flex;

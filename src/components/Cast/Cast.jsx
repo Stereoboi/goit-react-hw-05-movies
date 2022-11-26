@@ -34,7 +34,6 @@ const [loaded, setLoaded] = useState(false)
   if (castData) {
     return (
     <Wrapper>
-      <Title>Cast</Title>
       <List>
           {castData.map(el => (
           <ListItem key={el.id}>

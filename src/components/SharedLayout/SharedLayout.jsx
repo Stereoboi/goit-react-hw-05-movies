@@ -1,23 +1,30 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { Container, Header, Link,  } from "./SharedLayout.styled"; 
+import {Container,  Header, Link, Navigation, Wrapper  } from "./SharedLayout.styled"; 
+import ScalableContainer from "components/ScalableWrapper/ScalableWrapper";
+import { HeaderTitle } from "components/HeaderTitle/HeaderTitle";
 
 export const SharedLayout = () => {
   return (
     <Container>
       <Header>
-        <nav>
+        <Navigation>
           <Link to="/" end>
             Home
           </Link>
           <Link to="/movies">
             Movies
           </Link>
-        </nav>
+        </Navigation>
+        <HeaderTitle/>
       </Header>
+    <Wrapper>
+      <ScalableContainer>
       <Suspense>
         <Outlet />
       </Suspense>
+    </ScalableContainer>
+    </Wrapper>
     </Container>
   );
 };

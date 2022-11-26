@@ -2,14 +2,30 @@ import axios from "axios";
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 
-export const fetchFilms = async () => {
-    const response = await axios.get('/trending/all/day', {
+export const API_IMG = {
+  IMAGE_URL: 'https://image.tmdb.org/t/p',
+}
+
+export const fetchFilms = async page => {
+    const response = await axios.get('/trending/all/week', {
       params: {
         api_key: 'ac2f015efbd63aedea7bf25c08e7a150',
+        page: page
       }
     })
     
-    return response.data.results;
+    return response;
+};
+
+export const fetchFilmsByGenre = async () => {
+    const response = await axios.get('/genre/movie/list', {
+      params: {
+        api_key: 'ac2f015efbd63aedea7bf25c08e7a150',
+        
+      }
+    })
+    
+  return response ;
 };
 
 export const fetchFilmsById = async (id) => {
@@ -42,15 +58,16 @@ export const fetchFilmsReviews = async (id) => {
   return response.data.results;
 };
 
-export const fetchFilmsByQuery = async (query) => {
+export const fetchFilmsByQuery = async (query, page) => {
     const response = await axios.get(`/search/movie`, {
       params: {
         api_key: 'ac2f015efbd63aedea7bf25c08e7a150',
         query: query,
+        page: page,
       }
     })
   
-  return response.data.results;
+  return response;
 };
 
 

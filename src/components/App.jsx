@@ -5,16 +5,16 @@ import { lazy } from "react";
 
 const Home = lazy(() => import('../pages/Home.jsx'));
 const Movies = lazy(() => import('../pages/Movies.jsx'));
-const MovieDetails = lazy(() => import('../components/MovieDetails/MovieDetails.jsx'));
+const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails.jsx'));
 const Cast = lazy(() => import('../components/Cast/Cast.jsx'));
 const Reviews = lazy(() => import('../components/Reviews/Reviews.jsx'));
 
 export const App = () => {
   return (
-    <>
+    
       <Routes>
         <Route path="/" element={<SharedLayout/>}>
-        <Route index element={<Home/>} />
+          <Route index element={<Home/>} />
           <Route path="movies" element={<Movies />}/>
             <Route path="movies/:movieId" element={<MovieDetails />}>
               <Route path="cast" element={<Cast />}/>
@@ -23,6 +23,6 @@ export const App = () => {
           <Route path="*" element={<NotFound />} />  
         </Route>
       </Routes>
-    </>
+    
   );
 };
